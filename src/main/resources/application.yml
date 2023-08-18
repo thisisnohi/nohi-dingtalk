@@ -1,0 +1,53 @@
+server:
+  port: 8081
+  servlet:
+    context-path: /dd-mp
+# 日志相关
+logging:
+  level:
+    root: DEBUG
+    nohi.cxf: DEBUG
+  file:
+    path: ${HOME}/tmp/logs
+
+# 定义feign相关配置
+feign:
+  client:
+    config:
+      default:
+        # 设置feign日志级别
+        loggerLevel: full
+      # 微服务名称
+      cont:
+        # 设置feign日志级别
+        loggerLevel: full
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true
+
+spring:
+  application:
+    name: nohi
+  jackson:
+    default-property-inclusion: non_null
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  aop:
+    proxy-target-class: true
+  jpa:
+    database: mysql
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 1000
+          batch_versioned_data: true
+        order_inserts: true
+        order_updates: true
+        generate_statistics: false
+        format_sql: false
+        show-sql: false
+        enable_lazy_load_no_trans: true
+    show-sql: true
+pagehelper:
+  reasonable: true
