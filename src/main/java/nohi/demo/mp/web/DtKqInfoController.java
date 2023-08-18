@@ -53,4 +53,10 @@ public class DtKqInfoController {
     public BaseResponse synUserKqDetail(KqQueryReq req) {
         return dtKqInfoService.synUserKqDetail(req);
     }
+
+    @ApiOperation(value = "查询考勤信息", notes = "")
+    @PostMapping("findUserKq")
+    public BaseResponse findUserKq(@RequestBody KqQueryReq req) {
+        return dtKqInfoService.findUserKq(req);
+    }
 }

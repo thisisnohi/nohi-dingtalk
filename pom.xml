@@ -104,10 +104,11 @@
     </dependency>
 
     <dependency>
-      <groupId>com.taobao</groupId>
-      <artifactId>taobao-sdk-java-auto</artifactId>
-      <version>20210101</version>
+      <groupId>com.aliyun</groupId>
+      <artifactId>alibaba-dingtalk-service-sdk</artifactId>
+      <version>2.0.0</version>
     </dependency>
+
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>

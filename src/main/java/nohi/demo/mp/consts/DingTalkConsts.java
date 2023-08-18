@@ -27,7 +27,7 @@ public class DingTalkConsts extends DingTalkConstants {
 
     // 获取考勤组
     public static final String API_ATTENDANCE_GET_SIMPLE_GROUPS = "/topapi/attendance/getsimplegroups";
-
+    // 查询请假状态
     public static final String API_ATTENDANCE_GET_LEAVES_STATUS = "/topapi/attendance/getleavestatus";
 
 

@@ -46,4 +46,10 @@ public class TestDate {
             System.out.println(String.format("[%s]-[%s]", workDateFromStr, workDateToStr));
         }
     }
+
+    @Test
+    public void testNewDate(){
+        Date date = new Date(1692158400000L);
+        System.out.println(date);
+    }
 }

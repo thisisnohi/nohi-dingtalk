@@ -19,7 +19,7 @@ import java.util.List;
 public class KqQueryReq {
     @ApiModelProperty(value = "部门ID", example = "1")
     private String deptId;
-    @ApiModelProperty(value = "用户ID列表", example = "015919465020484799")
+    @ApiModelProperty(value = "用户ID列表", example = "['015919465020484799']")
     private List<String> userIdList;
     @ApiModelProperty(value = "日期开始时间 yyyy-MM-dd HH:mm:ss",required=true, example = "2021-01-01 08:00:00")
     @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss")

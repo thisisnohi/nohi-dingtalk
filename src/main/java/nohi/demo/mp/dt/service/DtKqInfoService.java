@@ -189,6 +189,7 @@ public class DtKqInfoService extends JpaCRUDService<DtKqInfo, String> {
         kqRes.setKqList(rsList);
         return kqRes;
     }
+
     @Transactional
     public void saveKqInfo(List<OapiAttendanceListResponse.Recordresult> kqList) {
         List<DtKqInfo> dtKqInfoList = Lists.newArrayList();
@@ -283,6 +284,7 @@ public class DtKqInfoService extends JpaCRUDService<DtKqInfo, String> {
         log.debug(msg);
         return BaseResponse.suc(msg);
     }
+
     /**
      * 按50分组查询用户数据
      * 同步数据库
@@ -322,6 +324,7 @@ public class DtKqInfoService extends JpaCRUDService<DtKqInfo, String> {
         kqRes.setKqDetailList(rsList);
         return kqRes;
     }
+
     @Transactional
     public void saveKqDetail(List<OapiAttendanceListRecordResponse.Recordresult> kqList) {
         List<DtKqDetail> dtKqInfoList = Lists.newArrayList();
@@ -340,4 +343,15 @@ public class DtKqInfoService extends JpaCRUDService<DtKqInfo, String> {
         dtKqDetailDao.saveAll(dtKqInfoList);
     }
 
+    /**
+     * 查询考勤信息
+     *
+     * @param req req
+     */
+    public BaseResponse findUserKq(KqQueryReq req) {
+        log.info("查询考勤信息");
+        BaseResponse response = BaseResponse.suc("");
+        response.setData(dtKqInfoDao.findUserKq());
+        return response;
+    }
 }

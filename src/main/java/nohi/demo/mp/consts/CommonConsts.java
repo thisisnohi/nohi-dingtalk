@@ -9,7 +9,9 @@ package nohi.demo.mp.consts;
 public class CommonConsts {
 
     public enum YesOrNo implements DictEnum{
+        // Y-是
         YES("Y","是"),
+        // N-否
         NO("N","否");
 
         private String key;

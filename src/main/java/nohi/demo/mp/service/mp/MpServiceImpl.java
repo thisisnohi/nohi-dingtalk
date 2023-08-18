@@ -400,7 +400,7 @@ public class MpServiceImpl {
         }
         List<OapiAttendanceGetleavestatusResponse.LeaveStatusVO> list = Lists.newArrayList();
         long offset = 0L;
-        long size = 10L;
+        long size = 20L;
         while (true) {
             OapiAttendanceGetleavestatusResponse.LeaveStatusListVO result = this.getLeavesSatus(offset, size, userIdList, startTime.getTime(), endTime.getTime());
             if (null != result && null != result.getLeaveStatus()) {

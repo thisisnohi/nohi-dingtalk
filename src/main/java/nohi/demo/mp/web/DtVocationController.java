@@ -1,14 +1,14 @@
 package nohi.demo.mp.web;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import nohi.demo.common.tx.BaseResponse;
-import nohi.demo.mp.dt.entity.jpa.DtUser;
+import nohi.demo.mp.dt.service.DtVocationStatusService;
 import nohi.demo.mp.dt.service.DtVocationTypeService;
+import nohi.demo.mp.dto.mp.KqQueryReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * @author NOHI
@@ -25,14 +25,24 @@ public class DtVocationController {
     @Autowired
     private DtVocationTypeService service;
 
-    @GetMapping("getAll")
-    public Object getAll() {
+    @Autowired
+    private DtVocationStatusService dtVocationStatusService;
+
+    @ApiOperation(value = "查询假期类型信息", notes = "")
+    @GetMapping("getTypeAll")
+    public Object getTypeAll() {
         return service.findAll();
     }
 
+    @ApiOperation(value = "查询假请信息", notes = "")
+    @GetMapping("getVocationAll")
+    public Object getVocationAll() {
+        return dtVocationStatusService.findAll();
+    }
 
-    @GetMapping("refresh")
-    public BaseResponse refresh() {
+    @ApiOperation(value = "刷新假期类型数据", notes = "")
+    @GetMapping("refreshVocationType")
+    public BaseResponse refreshVocationType() {
         try {
             return service.refresh();
         } catch (Exception e) {
@@ -41,5 +51,15 @@ public class DtVocationController {
         }
     }
 
+    @ApiOperation(value = "刷新员工假请数据", notes = "")
+    @GetMapping("refreshVocationStatus")
+    public BaseResponse refreshVocationStatus(KqQueryReq req) {
+        return dtVocationStatusService.refreshVocationStatus(req);
+    }
 
+    @ApiOperation(value = "查询请假信息", notes = "")
+    @PostMapping("findUserVocation")
+    public BaseResponse findUserVocation(@RequestBody KqQueryReq req) {
+        return dtVocationStatusService.findUserVocation(req);
+    }
 }
