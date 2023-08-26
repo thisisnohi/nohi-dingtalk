@@ -26,6 +26,9 @@ feign:
   okhttp:
     enabled: true
 
+pagehelper:
+  reasonable: true
+
 spring:
   application:
     name: nohi
@@ -49,5 +52,17 @@ spring:
         show-sql: false
         enable_lazy_load_no_trans: true
     show-sql: true
-pagehelper:
-  reasonable: true
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/dingtalk?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2b8
+    username: aaaa
+    password: bbbb
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+# mp配置
+dingtalk:
+  mp:
+    agentId: xxxxxx
+    appKey: aaaaaa
+    appSecret: bbbbbb
+    dingTalkServer: https://oapi.dingtalk.com
+    managerId: ddddd
