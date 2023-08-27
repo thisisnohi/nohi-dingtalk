@@ -1,13 +1,13 @@
 package nohi.demo.common.tx;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author NOHI
@@ -28,9 +28,5 @@ public class HttpErrorController implements ErrorController {
         log.info("访问[{}] error 错误代码:{}", uri, response.getStatus());
         BaseResponse result = new BaseResponse(BaseResponse.ResCode.ERROR,"HttpErrorController error:"+response.getStatus());
         return result;
-    }
-    @Override
-    public String getErrorPath() {
-        return ERROR_PATH;
     }
 }

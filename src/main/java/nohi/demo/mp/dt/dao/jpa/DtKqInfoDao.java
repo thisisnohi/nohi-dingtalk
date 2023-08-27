@@ -1,11 +1,10 @@
 package nohi.demo.mp.dt.dao.jpa;
 
-import nohi.demo.mp.dt.entity.jpa.DtKqInfo;
+import jakarta.transaction.Transactional;
 import nohi.demo.common.das.JpaDAO;
+import nohi.demo.mp.dt.entity.jpa.DtKqInfo;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Map;
 

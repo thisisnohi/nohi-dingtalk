@@ -1,14 +1,10 @@
 package nohi.demo.mp.dt.entity.jpa;
 
-import javax.persistence.Entity;
-import javax.persistence.Column;
-import javax.persistence.Table;
-import javax.persistence.GeneratedValue;
-import nohi.demo.common.das.OperationTracablePO;
-import org.hibernate.annotations.GenericGenerator;
-import javax.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import nohi.demo.common.das.OperationTracablePO;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * <p>

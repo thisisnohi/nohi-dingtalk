@@ -10,4 +10,16 @@
 
 ## 项目运行
 * 修改：钉钉应用配置
-> application.yml dingtalk.mp
+> application.yml
+
+```yaml
+dingtalk:
+    mp:
+      agentId: xxxxxx
+      appKey: aaaaaa
+      appSecret: bbbbbb
+      dingTalkServer: https://oapi.dingtalk.com
+      managerId: ddddd
+```
+
+* knif4j: `http://127.0.0.1:8081/dd-mp/doc.html#/home`

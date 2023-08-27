@@ -1,13 +1,11 @@
 package nohi.demo.mp.web;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import nohi.demo.common.tx.BaseResponse;
 import nohi.demo.mp.dt.entity.jpa.DtKqGroup;
-import nohi.demo.mp.dt.entity.jpa.DtUser;
 import nohi.demo.mp.dt.service.DtKqGroupService;
-import nohi.demo.mp.dt.service.DtUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +17,7 @@ import java.util.List;
  * @description:
  * @create 2021-01-03 20:59
  **/
-@Api(value = "dtGroup", tags = "dtGroup", description = "dt考勤组")
+@Tag(name = "dtGroup", description = "dt考勤组")
 @RestController
 @RequestMapping(value = "dtGroup")
 @Slf4j
@@ -38,7 +36,7 @@ public class DtKqGroupController {
         return dtKqGroupService.listDepts(info);
     }
 
-    @ApiOperation(value = "刷新考勤组", notes = "")
+    @Operation(method = "refresh", summary = "刷新考勤组")
     @GetMapping("refresh")
     public BaseResponse refresh() {
         try {

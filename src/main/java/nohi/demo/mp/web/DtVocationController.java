@@ -1,7 +1,7 @@
 package nohi.demo.mp.web;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import nohi.demo.common.tx.BaseResponse;
 import nohi.demo.mp.dt.service.DtVocationStatusService;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
  * @description:
  * @create 2021-01-03 20:59
  **/
-@Api(value = "dtVocation", tags = "dtVocation", description = "假期相关操作")
+@Tag(name = "dtVocation", description = "假期相关操作")
 @RestController
 @RequestMapping(value = "dtVocation")
 @Slf4j
@@ -28,19 +28,19 @@ public class DtVocationController {
     @Autowired
     private DtVocationStatusService dtVocationStatusService;
 
-    @ApiOperation(value = "查询假期类型信息", notes = "")
+    @Operation(method = "getTypeAll", summary = "查询假期类型信息")
     @GetMapping("getTypeAll")
     public Object getTypeAll() {
         return service.findAll();
     }
 
-    @ApiOperation(value = "查询假请信息", notes = "")
+    @Operation(method = "getVocationAll", summary = "查询假请信息")
     @GetMapping("getVocationAll")
     public Object getVocationAll() {
         return dtVocationStatusService.findAll();
     }
 
-    @ApiOperation(value = "刷新假期类型数据", notes = "")
+    @Operation(method = "refreshVocationType", summary = "刷新假期类型数据")
     @GetMapping("refreshVocationType")
     public BaseResponse refreshVocationType() {
         try {
@@ -51,13 +51,13 @@ public class DtVocationController {
         }
     }
 
-    @ApiOperation(value = "刷新员工假请数据", notes = "")
+    @Operation(method = "refreshVocationStatus", summary = "刷新员工假请数据")
     @GetMapping("refreshVocationStatus")
     public BaseResponse refreshVocationStatus(KqQueryReq req) {
         return dtVocationStatusService.refreshVocationStatus(req);
     }
 
-    @ApiOperation(value = "查询请假信息", notes = "")
+    @Operation(method = "findUserVocation", summary = "查询请假信息")
     @PostMapping("findUserVocation")
     public BaseResponse findUserVocation(@RequestBody KqQueryReq req) {
         return dtVocationStatusService.findUserVocation(req);

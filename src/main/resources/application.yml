@@ -9,6 +9,11 @@ logging:
     nohi.cxf: DEBUG
   file:
     path: ${HOME}/tmp/logs
+  logback:
+    rolling-policy:
+      # 100MB
+      max-file-size: 100
+      max-history: 7
 
 # 定义feign相关配置
 feign:

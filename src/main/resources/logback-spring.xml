@@ -8,6 +8,8 @@
 
     <springProperty scope="context" name="logging.path" source="logging.file.path"/>
     <springProperty scope="context" name="filename" source="spring.application.name"/>
+    <springProperty scope="context" name="max-file-size" source="logging.logback.rolling-policy.max-file-size"  />
+    <springProperty scope="context" name="max-history" source="logging.logback.rolling-policy.max-history"/>
 
     <!-- 文件输出格式 -->
     <property name="PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}[%line] - %msg%n"/>
@@ -31,10 +33,10 @@
         <File>${logging.path}/${filename}_error.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <FileNamePattern>${logging.path}/%d{yyyyMMdd}/${filename}_error.-%i.log</FileNamePattern>
-            <MaxHistory>${log.maxhistory}</MaxHistory>
+            <MaxHistory>${max-file-size}</MaxHistory>
             <TimeBasedFileNamingAndTriggeringPolicy
                     class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <MaxFileSize>50MB</MaxFileSize>
+                <MaxFileSize>${max-file-size}MB</MaxFileSize>
             </TimeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
         <layout class="ch.qos.logback.classic.PatternLayout">

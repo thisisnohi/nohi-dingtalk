@@ -1,9 +1,9 @@
 package nohi.demo.mp.dt.dao.jpa;
 
-import nohi.demo.mp.dt.entity.jpa.DtKqDetail;
+import jakarta.transaction.Transactional;
 import nohi.demo.common.das.JpaDAO;
+import nohi.demo.mp.dt.entity.jpa.DtKqDetail;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 /**

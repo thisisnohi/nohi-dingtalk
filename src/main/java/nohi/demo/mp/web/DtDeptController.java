@@ -1,7 +1,7 @@
 package nohi.demo.mp.web;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import nohi.demo.common.tx.BaseResponse;
 import nohi.demo.mp.dt.entity.jpa.DtDept;
@@ -17,7 +17,7 @@ import java.util.List;
  * @description:
  * @create 2021-01-03 20:59
  **/
-@Api(value = "dtDept", tags = "dtDept", description = "dt部门服务")
+@Tag(name = "dtDept", description = "dt部门服务")
 @RestController
 @RequestMapping(value = "dtDetp")
 @Slf4j
@@ -36,7 +36,7 @@ public class DtDeptController {
         return dtDeptService.listDepts(info);
     }
 
-    @ApiOperation(value = "刷新部门", notes = "")
+    @Operation(method = "refresh", summary = "刷新部门")
     @GetMapping("refresh")
     public BaseResponse refresh() {
         try {

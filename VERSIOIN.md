@@ -11,3 +11,12 @@
   * alibaba-dingtalk-service-sdk 2.0.0
 * 基本功能：
   * 同步部门、用户、考勤、审批、假请信息
+
+### 2.0-SNAPSHOT
+* base:
+  * jdk 17
+  * SpringBoot 3
+  * Vue3
+* 功能
+  * 同步钉钉信息
+  * 前端展示

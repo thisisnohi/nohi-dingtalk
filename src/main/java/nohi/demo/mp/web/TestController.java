@@ -1,7 +1,7 @@
 package nohi.demo.mp.web;
 
 import com.taobao.api.ApiException;
-import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import nohi.demo.mp.service.TestService;
 import nohi.demo.mp.service.mp.MpHandler;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @description:
  * @create 2021-01-03 20:59
  **/
-@Api(value = "DEMO", tags = "demo", description = "demo 服务")
+@Tag(name = "test",  description = "demo 服务")
 @RestController
 @RequestMapping(value = "test")
 @Slf4j

@@ -1,16 +1,13 @@
 package nohi.demo.mp.dt.entity.jpa;
 
-import javax.persistence.Entity;
-import javax.persistence.Column;
-import java.math.BigDecimal;
-import javax.persistence.Table;
-import javax.persistence.GeneratedValue;
-import java.util.Date;
-import nohi.demo.common.das.OperationTracablePO;
-import org.hibernate.annotations.GenericGenerator;
-import javax.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import nohi.demo.common.das.OperationTracablePO;
+import org.hibernate.annotations.GenericGenerator;
+
+import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * <p>
