@@ -34,6 +34,13 @@ feign:
 pagehelper:
   reasonable: true
 
+# swaggerui配置
+springfox:
+  documentation:
+    swagger-ui:
+      # 生产建议关闭
+      enabled: false
+
 spring:
   application:
     name: nohi

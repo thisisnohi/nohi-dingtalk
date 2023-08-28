@@ -66,8 +66,10 @@
     </appender>
 
     <logger name="springfox" level="WARN"/>
-    <logger name="org" level="WARN"/>
     <logger name="com.zaxxer.hikari.pool" level="WARN"/>
+    <logger name="org" level="WARN"/>
+    <logger name="io" level="WARN"/>
+    <logger name="com" level="WARN"/>
     <!--
     -->
     <!--<logger name="httpclient.wire.header" level="info"/>

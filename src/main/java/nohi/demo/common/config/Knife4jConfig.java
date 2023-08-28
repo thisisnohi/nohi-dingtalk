@@ -55,12 +55,11 @@ public class Knife4jConfig {
         Profiles profiles = Profiles.of("dev", "test");
         // 判断是否处在自己设定的环境当中
         boolean flag = environment.acceptsProfiles(profiles);
-        log.info("Knife4j 开启[{}]", flag);
+        log.info("Knife4j 开启[{}](关闭swaggerui，在属性文件中配置)", flag);
 
-
-        return new OpenAPI().info(new Info().title("NOHI Web")
+        return new OpenAPI().info(new Info().title("NOHI Dingtalk")
                 .version("1.0")
-                .description("Knife4j集成springdoc-openapi示例")
+                .description("Dingtalk演示")
                 .termsOfService("http://nohi.online")
                 .license(new License().name("MIT License").url("http://opensource.org/licenses/MIT")));
     }
