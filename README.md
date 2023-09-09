@@ -23,3 +23,11 @@ dingtalk:
 ```
 
 * knif4j: `http://127.0.0.1:8081/dd-mp/doc.html#/home`
+
+### 后端
+
+```
+ cd nohi-dd-view
+ yarn dev
+```
+* `http://localhost:3001/vab/#/`
