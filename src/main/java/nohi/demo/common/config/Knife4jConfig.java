@@ -5,11 +5,15 @@ import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 import lombok.extern.slf4j.Slf4j;
 import org.springdoc.core.customizers.GlobalOpenApiCustomizer;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.Profiles;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -62,5 +66,48 @@ public class Knife4jConfig {
                 .description("Dingtalk演示")
                 .termsOfService("http://nohi.online")
                 .license(new License().name("MIT License").url("http://opensource.org/licenses/MIT")));
+    }
+
+    /**
+     * Spring 上下文工具类
+     */
+    @Component
+    public static class SpringContextUtils implements ApplicationContextAware {
+
+        private static ApplicationContext applicationContext;
+
+        @Override
+        public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+            SpringContextUtils.applicationContext = applicationContext;
+        }
+
+        /**
+         * 根据 Spring BeanID 取得 Spring Bean 实例
+         * @param beanName Spring BeanID
+         * @param <T>      Bean 类型
+         * @return Spring Bean 实例，若找不到返回空
+         */
+        public static <T> T getBean(String beanName) {
+            if(applicationContext.containsBean(beanName)){
+                return (T) applicationContext.getBean(beanName);
+            }else{
+                return null;
+            }
+        }
+
+        public static <T> T getBean(Class clzz) {
+            return (T) applicationContext.getBean(clzz);
+        }
+
+        /**
+         * 根据 Bean 类型取得 Spring Bean 实例
+         * @param baseType Bean 类型
+         * @param <T>      Bean 类型
+         * @return Bean 实例 Map（key 为 Spring BeanID，val 为 Spring Bean 实例）
+         */
+        public static <T> Map<String, T> getBeansOfType(Class<T> baseType){
+            return applicationContext.getBeansOfType(baseType);
+        }
+
     }
 }
