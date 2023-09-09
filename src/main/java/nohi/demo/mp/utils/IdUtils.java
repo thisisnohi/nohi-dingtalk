@@ -1,6 +1,7 @@
 package nohi.demo.mp.utils;
 
 import java.security.SecureRandom;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -26,6 +27,14 @@ public class IdUtils {
             msg += random.nextInt(10);
         }
         return msg;
+    }
+
+    /**
+     * 随机数
+     *
+     */
+    public static String timeFlow() {
+        return DateUtils.format(new Date(), DateUtils.TIMESTAMP) + radomLength(3);
     }
 
 }

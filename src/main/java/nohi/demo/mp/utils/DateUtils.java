@@ -236,4 +236,12 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	public static LocalDate stringToLocalDate(String dateStr, String pattern) {
 		return LocalDate.parse(dateStr, DateTimeFormatter.ofPattern(pattern));
 	}
+
+	public static String localDateFormat(LocalDate localDate, String pattern) {
+		DateTimeFormatter dateformat = DateTimeFormatter.ofPattern(null == pattern ? HYPHEN_DATE : pattern);
+		if (null != localDate) {
+			return localDate.format(dateformat);
+		}
+		return null;
+	}
 }

@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8080
   servlet:
     context-path: /dd-mp
 # 日志相关
@@ -8,7 +8,7 @@ logging:
     root: DEBUG
     nohi.cxf: DEBUG
   file:
-    path: ${HOME}/tmp/logs
+    path: ${spring.application.workspace}/logs
   logback:
     rolling-policy:
       # 100MB
@@ -63,7 +63,7 @@ spring:
         format_sql: false
         show-sql: false
         enable_lazy_load_no_trans: true
-    show-sql: true
+    show-sql: false
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/dingtalk?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2b8
     username: aaaa
@@ -78,3 +78,4 @@ dingtalk:
     appSecret: bbbbbb
     dingTalkServer: https://oapi.dingtalk.com
     managerId: ddddd
+    filePath: ${spring.application.workspace}/file

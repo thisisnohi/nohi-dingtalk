@@ -1,5 +1,8 @@
 package nohi.demo.mp.dt.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dingtalk.api.response.OapiV2UserListResponse;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
@@ -9,14 +12,19 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nohi.demo.common.das.JpaCRUDService;
 import nohi.demo.common.das.JpaDAO;
+import nohi.demo.common.tx.BasePage;
 import nohi.demo.common.tx.BaseResponse;
+import nohi.demo.common.tx.PageUtils;
 import nohi.demo.mp.consts.CommonConsts;
 import nohi.demo.mp.dt.dao.jpa.DtDeptDao;
 import nohi.demo.mp.dt.dao.jpa.DtUserDao;
 import nohi.demo.mp.dt.dao.jpa.DtUserDeptRelDao;
+import nohi.demo.mp.dt.dao.mapper.DtUserMapper;
 import nohi.demo.mp.dt.entity.jpa.DtDept;
 import nohi.demo.mp.dt.entity.jpa.DtUser;
 import nohi.demo.mp.dt.entity.jpa.DtUserDeptRel;
+import nohi.demo.mp.dto.mp.dept.DeptInfo;
+import nohi.demo.mp.dto.mp.user.UserQuery;
 import nohi.demo.mp.service.mp.MpHandler;
 import nohi.demo.mp.utils.JsonUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -43,22 +51,37 @@ public class DtUserService extends JpaCRUDService<DtUser, String> {
     private final DtUserDao dtUserDao;
     private final DtDeptDao dtDeptDao;
     private final DtUserDeptRelDao dtUserDeptRelDao;
+    private final DtUserMapper dtUserMapper;
 
     @Autowired
     private MpHandler mpHandler;
 
     @Override
-    public JpaDAO<DtUser, String> getDAO(){
+    public JpaDAO<DtUser, String> getDAO() {
         return dtUserDao;
     }
 
     public List<DtUser> listDepts(DtUser info) {
-        Sort sort =  Sort.by(Sort.Direction.ASC, "dtUserid");
+        Sort sort = Sort.by(Sort.Direction.ASC, "dtUserid");
         return this.findByExample(info, sort);
     }
 
     /**
+     * 分页查询
+     * @param basePage 分页信息
+     * @param info  查询条件对象
+     * @return 结果列表
+     */
+    public List<DtUser> listDepts(BasePage basePage, UserQuery info) {
+        Page<DtUser> page = PageUtils.buildPage(basePage, DtUser.class);
+        List<DtUser> list = dtUserMapper.userList(page, info);
+        PageUtils.buildPage(basePage, page);
+        return list;
+    }
+
+    /**
      * 刷新用户
+     *
      * @param enNo
      * @return
      */
@@ -70,7 +93,7 @@ public class DtUserService extends JpaCRUDService<DtUser, String> {
         AtomicInteger error = new AtomicInteger();
         Set<String> errorSet = Sets.newHashSet();
         // 按部门同步
-        dtdeptList.forEach( dept -> {
+        dtdeptList.forEach(dept -> {
             BaseResponse response = this.refreshByDept(dept.getDtDeptName(), Long.valueOf(dept.getDtDeptId()));
             optRespList.add(response);
             if (!BaseResponse.ResCode.SUC.equals(response.getResCode())) {
@@ -90,6 +113,7 @@ public class DtUserService extends JpaCRUDService<DtUser, String> {
 
     /**
      * 按部门刷新用户
+     *
      * @param deptName
      * @param depIt
      * @return
@@ -97,7 +121,7 @@ public class DtUserService extends JpaCRUDService<DtUser, String> {
     public BaseResponse refreshByDept(String deptName, Long depIt) {
         String title = String.format("刷新部门[%s-%s]用户", depIt, deptName);
         try {
-            List<OapiV2UserListResponse.ListUserResponse> userList =  mpHandler.getMpService().getDeptsAllUser(Long.valueOf(depIt));
+            List<OapiV2UserListResponse.ListUserResponse> userList = mpHandler.getMpService().getDeptsAllUser(Long.valueOf(depIt));
             log.debug("部门[{}]钉钉用户:{}", deptName, JsonUtils.toJson(userList));
             if (null == userList || userList.isEmpty()) {
                 return BaseResponse.newCode("01", "没有用户列表");
@@ -147,6 +171,7 @@ public class DtUserService extends JpaCRUDService<DtUser, String> {
 
     /**
      * 根据部门Id，查询用户列表
+     *
      * @param dtDeptId
      * @return
      */

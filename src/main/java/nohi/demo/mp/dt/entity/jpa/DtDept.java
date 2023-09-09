@@ -1,5 +1,6 @@
 package nohi.demo.mp.dt.entity.jpa;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Table;

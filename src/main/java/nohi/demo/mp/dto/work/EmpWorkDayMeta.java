@@ -17,8 +17,6 @@ import java.util.Date;
  **/
 @Data
 public class EmpWorkDayMeta {
-    @ExcelProperty("项目名")
-    private String projectName;
     @ExcelProperty("员工号")
     private String userNo;
     @ExcelProperty("员工名")

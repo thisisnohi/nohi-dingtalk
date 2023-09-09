@@ -210,4 +210,15 @@ public class DtKqDetail extends OperationTracablePO<String> {
     @Column(name = "DEVICE_SN")
     private String deviceSn;
 
+    /**
+     * 排班ID
+     */
+    @Column(name = "PLAN_ID")
+    private String planId;
+
+    /**
+     * 关联业务ID
+     */
+    @Column(name = "BIZ_ID")
+    private String bizId;
 }

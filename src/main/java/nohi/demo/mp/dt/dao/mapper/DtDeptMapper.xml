@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nohi.demo.mp.dt.dao.mapper.DtDeptMapper">
+
+
+  <select id="dtDeptList" parameterType="nohi.demo.mp.dto.mp.dept.DeptQuery"  resultType="nohi.demo.mp.dto.mp.dept.DeptInfo">
+    select dd.id, dd.created_by createdBy, dd.created_ts createdTs, dd.last_upd_by lastIpdBy, dd.last_upd_ts lastUpdTs
+      , dd.dt_dept_id dtDeptId, dd.dt_dept_name dtDeptName , dd.en_dept_no enDeptNo
+      , dd.DT_PAR_DEPT_ID dtParDeptId
+      , par.DT_DEPT_NAME dtParDeptName
+      , rel.COUNT deptUserNum
+    from dt_dept dd
+    left join  dt_dept par on dd.DT_PAR_DEPT_ID = par.DT_DEPT_ID
+    left join (
+      select DT_DEPT_ID, count(1) COUNT
+      from DT_USER_DEPT_REL
+      group by DT_DEPT_ID
+    ) rel on dd.DT_DEPT_ID = rel.DT_DEPT_ID
+    <where>
+      <if test="info.deptId != null and info.deptId != ''">
+        and dd.dt_dept_id = #{info.deptId}
+      </if>
+      <if test="info.deptName != null and info.deptName != ''">
+        and dd.DT_DEPT_NAME like CONCAT('%', #{info.deptName}, '%')
+      </if>
+    </where>
+  </select>
+
+</mapper>

@@ -1,5 +1,5 @@
 import nohi.demo.mp.utils.DateUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

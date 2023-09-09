@@ -1,10 +1,12 @@
 package nohi.demo.mp.dto.work;
 
 import lombok.Data;
+import nohi.demo.mp.dto.work.dt.WorkDayMeta;
 
 import java.util.List;
 
 /**
+ * 员工-工时列表
  * @author NOHI
  * @program: nohi-dd-miniprogram-server
  * @description:
@@ -12,11 +14,10 @@ import java.util.List;
  **/
 @Data
 public class WorkSheetDTO {
-    private String projectNo; // 项目号
-    private String projectName; // 项目名
-    private String office;  // 科室
-    private String userNo;  // 员工号
-    private String userName; // 员工名
+    // 员工号
+    private String userNo;
+    // 员工名
+    private String userName;
 
     private List<WorkDayMeta> workDayList;
 

@@ -33,10 +33,10 @@
         <File>${logging.path}/${filename}_error.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <FileNamePattern>${logging.path}/%d{yyyyMMdd}/${filename}_error.-%i.log</FileNamePattern>
-            <MaxHistory>${max-file-size}</MaxHistory>
+            <MaxHistory>10</MaxHistory>
             <TimeBasedFileNamingAndTriggeringPolicy
                     class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <MaxFileSize>${max-file-size}MB</MaxFileSize>
+                <MaxFileSize>100MB</MaxFileSize>
             </TimeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
         <layout class="ch.qos.logback.classic.PatternLayout">
@@ -67,6 +67,8 @@
 
     <logger name="springfox" level="WARN"/>
     <logger name="com.zaxxer.hikari.pool" level="WARN"/>
+    <logger name="org" level="WARN"/>
+    <logger name="org.hibernate" level="INFO"/>
     <logger name="org" level="WARN"/>
     <logger name="io" level="WARN"/>
     <logger name="com" level="WARN"/>

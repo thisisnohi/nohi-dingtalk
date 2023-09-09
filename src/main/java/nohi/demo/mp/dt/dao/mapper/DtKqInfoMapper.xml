@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nohi.demo.mp.dt.dao.mapper.DtKqInfoMapper">
+
+  <resultMap id="BaseResultMap" type="nohi.demo.mp.dt.entity.jpa.DtKqDetail">
+    <id column="ID" jdbcType="VARCHAR" property="id" />    <!-- 主键 -->
+    <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />    <!-- 记录创建者 -->
+    <result column="CREATED_TS" jdbcType="TIMESTAMP" property="createdTs" />    <!-- 记录创建时间 -->
+    <result column="LAST_UPD_BY" jdbcType="VARCHAR" property="lastUpdBy" />    <!-- 记录最后更新者 -->
+    <result column="LAST_UPD_TS" jdbcType="TIMESTAMP" property="lastUpdTs" />    <!-- 记录最后更新时间 -->
+    <result column="USER_ACCURACY" jdbcType="VARCHAR" property="userAccuracy" />    <!-- 用户打卡定位精度 -->
+    <result column="USER_LATITUDE" jdbcType="VARCHAR" property="userLatitude" />    <!-- 用户打卡纬度 -->
+    <result column="USER_LONGITUDE" jdbcType="VARCHAR" property="userLongitude" />    <!-- 用户打卡经度 -->
+    <result column="USER_ADDRESS" jdbcType="VARCHAR" property="userAddress" />    <!-- 用户打卡地址 -->
+    <result column="DEVICE_ID" jdbcType="VARCHAR" property="deviceId" />    <!-- 打卡设备ID -->
+    <result column="LOCATION_METHOD" jdbcType="VARCHAR" property="locationMethod" />    <!-- 定位方法 -->
+    <result column="IS_LEGAL" jdbcType="VARCHAR" property="isLegal" />    <!-- 是否合法 -->
+    <result column="USERCHECK_TIME" jdbcType="TIMESTAMP" property="usercheckTime" />    <!-- 实际打卡时间 -->
+    <result column="BASE_CHECK_TIME" jdbcType="TIMESTAMP" property="baseCheckTime" />    <!-- 计算迟到和早退，基准时间；也可作为排班打卡时间 -->
+    <result column="TIME_RESULT" jdbcType="VARCHAR" property="timeResult" />    <!-- 打卡结果 Normal：正常
+                                                                                      Early：早退
+                                                                                      Late：迟到
+                                                                                      SeriousLate：严重迟到
+                                                                                      Absenteeism：旷工迟到
+                                                                                      NotSigned：未打卡 -->
+    <result column="LOCATION_RESULT" jdbcType="VARCHAR" property="locationResult" />    <!-- 位置结果 Normal：范围内
+                                                                                              Outside：范围外
+                                                                                              NotSigned：未打卡
+                                                                                              checkType	String	OnDuty	考勤类型：
+                                                                                              OnDuty：上班
+                                                                                              OffDuty：下班 -->
+    <result column="SOURCE_TYPE" jdbcType="VARCHAR" property="sourceType" />    <!-- 数据来源
+                                                                                  ATM：考勤机
+                                                                                  BEACON：IBeacon
+                                                                                  DING_ATM：钉钉考勤机
+                                                                                  USER：用户打卡
+                                                                                  BOSS：老板改签
+                                                                                  APPROVE：审批系统
+                                                                                  SYSTEM：考勤系统
+                                                                                  AUTO_CHECK：自动打卡 -->
+    <result column="USER_ID" jdbcType="VARCHAR" property="userId" />    <!-- 打卡人的userid -->
+    <result column="WORK_DATE" jdbcType="DATE" property="workDate" />    <!-- 工作日 -->
+    <result column="GROUP_ID" jdbcType="VARCHAR" property="groupId" />    <!-- 考勤组ID -->
+    <result column="USER_SSID" jdbcType="VARCHAR" property="userSsid" />    <!-- 用户打卡wifi SSID -->
+    <result column="USER_MAC_ADDR" jdbcType="VARCHAR" property="userMacAddr" />    <!-- 用户打卡wifi Mac地址 -->
+    <result column="BASE_ADDRESS" jdbcType="VARCHAR" property="baseAddress" />    <!-- 基准地址 -->
+    <result column="BASE_LONGITUDE" jdbcType="VARCHAR" property="baseLongitude" />    <!-- 基准经度 -->
+    <result column="BASE_LATITUDE" jdbcType="VARCHAR" property="baseLatitude" />    <!-- 基准纬度 -->
+    <result column="BASE_ACCURACY" jdbcType="VARCHAR" property="baseAccuracy" />    <!-- 基准定位精度 -->
+    <result column="BASE_SSID" jdbcType="VARCHAR" property="baseSsid" />    <!-- 基准wifi ssid -->
+    <result column="BASE_MAC_ADDR" jdbcType="VARCHAR" property="baseMacAddr" />    <!-- 基准Mac地址 -->
+    <result column="GMT_CREATE" jdbcType="TIMESTAMP" property="gmtCreate" />    <!-- 打卡创建时间 -->
+    <result column="OUTSIDE_REMARK" jdbcType="VARCHAR" property="outsideRemark" />    <!-- 打卡备注 -->
+    <result column="DEVICE_SN" jdbcType="VARCHAR" property="deviceSn" />    <!-- 打卡设备序列号 -->
+    <result column="PLAN_ID" jdbcType="VARCHAR" property="planId" />    <!-- 排班ID -->
+    <result column="BIZ_ID" jdbcType="VARCHAR" property="bizId" />    <!-- 关联的业务ID -->
+  </resultMap>
+
+  <resultMap id="KaoQingBaseResultMap" type="nohi.demo.mp.dto.mp.kq.UserKqInfoDTO">
+    <result column="DT_USERID" jdbcType="VARCHAR" property="dtUserId"/>
+    <result column="DT_USERNAME" jdbcType="VARCHAR" property="dtUserName"/>
+    <result column="EN_USERNO" jdbcType="VARCHAR" property="enUserNo"/>
+    <result column="WORK_DATE" jdbcType="TIMESTAMP" property="workDate"/>
+    <result column="CHECK_TYPE" jdbcType="VARCHAR" property="checkType"/>
+    <result column="CHECK_TYPE_CN" jdbcType="VARCHAR" property="checkTypeCn"/>
+    <result column="USERCHECK_TIME" jdbcType="TIMESTAMP" property="usercheckTime"/>
+    <result column="BASE_CHECK_TIME" jdbcType="TIMESTAMP" property="baseCheckTime"/>
+    <result column="TIME_RESULT" jdbcType="VARCHAR" property="timeResult"/>
+    <result column="TIME_RESULT_CN" jdbcType="VARCHAR" property="timeResultCn"/>
+    <result column="LOCATION_RESULT" jdbcType="VARCHAR" property="locationResult"/>
+    <result column="LOCATION_RESULT_CN" jdbcType="VARCHAR" property="locationResultCn"/>
+    <result column="SOURCE_TYPE" jdbcType="VARCHAR" property="sourceType"/>
+    <result column="SOURCE_TYPE_CN" jdbcType="VARCHAR" property="sourceTypeCn"/>
+    <result column="LOCATION_METHOD" jdbcType="VARCHAR" property="locationMethod"/>
+    <result column="USER_ADDRESS" jdbcType="VARCHAR" property="userAddress"/>
+    <result column="PROC_INST_ID" jdbcType="VARCHAR" property="procInstId"/>
+    <result column="APR_TITLE" jdbcType="VARCHAR" property="aprTitle"/>
+    <result column="APR_STATUS" jdbcType="VARCHAR" property="aprStatus"/>
+    <result column="APR_STATUS_CN" jdbcType="VARCHAR" property="aprStatusCn"/>
+    <result column="APR_RESULT" jdbcType="VARCHAR" property="aprResult"/>
+    <result column="APR_RESULT_CN" jdbcType="VARCHAR" property="aprResultCn"/>
+    <result column="OUTSIDE_REMARK" jdbcType="VARCHAR" property="outsideRemark"/>
+  </resultMap>
+
+  <select id="dingTalkList" parameterType="nohi.demo.mp.dto.mp.KqQueryReq"  resultMap="KaoQingBaseResultMap">
+      select du.DT_USERID
+        , du.DT_USERNAME
+        , du.EN_USERNO
+        , di.WORK_DATE
+        , di.CHECK_TYPE
+        , case (di.CHECK_TYPE)
+        when 'OnDuty' then '上班'
+        when 'OffDuty' then '下班'
+        end CHECK_TYPE_CN
+        , di.BASE_CHECK_TIME
+        , di.USERCHECK_TIME
+        , di.TIME_RESULT
+        , case (di.TIME_RESULT)
+        when 'Normal' then '正常'
+        when 'Early' then '早退'
+        when 'Late' then '迟到'
+        when 'SeriousLate' then '严重迟到'
+        when 'Absenteeism' then '旷工迟到'
+        when 'NotSigned' then '未打卡'
+        end TIME_RESULT_CN
+        , di.LOCATION_RESULT
+        ,  case (di.LOCATION_RESULT)
+        when 'Normal' then '范围内'
+        when 'Outside' then '范围外'
+        when 'NotSigned' then '未打卡'
+        end LOCATION_RESULT_CN
+        , di.SOURCE_TYPE
+        , case (di.SOURCE_TYPE)
+        when 'USER' then '用户打卡'
+        when 'BOSS' then '老板改签'
+        when 'APPROVE' then '审批系统'
+        when 'SYSTEM' then '考勤系统'
+        when 'AUTO_CHECK' then '自动打卡'
+        end SOURCE_TYPE_CN
+        , kd.LOCATION_METHOD
+        , kd.USER_ADDRESS
+        , kd.OUTSIDE_REMARK
+        , di.PROC_INST_ID
+        , pi.TITLE APR_TITLE
+        , pi.STATUS APR_STATUS
+        , case (pi.STATUS)
+        when 'NEW' then '新创建'
+        when 'RUNNING' then '审批中'
+        when 'TERMINATED' then '被终止'
+        when 'COMPLETED' then '完成'
+        when 'CANCELED' then '取消'
+        end APR_STATUS_CN
+        , pi.RESULT APR_RESULT
+        , case (pi.RESULT)
+        when 'agree' then '同意'
+        when 'refuse' then '拒绝'
+        end APR_RESULT_CN
+      FROM DT_KQ_INFO DI
+      LEFT JOIN DT_USER DU
+        ON DU.DT_USERID = DI.DT_USERID
+      LEFT JOIN DT_KQ_DETAIL KD
+        ON DI.RECORD_ID = KD.ID
+      LEFT JOIN DT_APR_PROC_INST PI
+        ON PI.ID = DI.PROC_INST_ID
+      where
+      1=1
+      <if test="info.queryProcInstId != null and info.queryProcInstId != '' ">
+        AND DI.PROC_INST_ID = #{info.queryProcInstId,jdbcType=VARCHAR}
+      </if>
+      <if test="info.queryUserId != null and info.queryUserId != '' ">
+        AND DU.DT_USERID = #{info.queryUserId,jdbcType=VARCHAR}
+      </if>
+      <if test="info.queryUserNo != null and info.queryUserNo != '' ">
+        AND (DU.EN_USERNO = #{info.queryUserNo,jdbcType=VARCHAR} or DU.DT_USERNAME like concat('%',#{info.queryUserNo},'%'))
+      </if>
+      <if test="info.queryUserName != null and info.queryUserName != '' ">
+        AND DU.DT_USERNAME like concat('%',#{info.queryUserName},'%')
+      </if>
+      <if test="info.workDateFromStr != null and info.workDateFromStr != '' ">
+        AND DI.WORK_DATE  <![CDATA[ >= #{info.workDateFromStr}]]>
+      </if>
+      <if test="info.workDateToStr != null and info.workDateToStr != '' ">
+        AND DI.WORK_DATE  <![CDATA[ <= #{info.workDateToStr}]]>
+      </if>
+      <if test="info.queryTimeResultSql != null and info.queryTimeResultSql != '' ">
+        AND di.TIME_RESULT  IN ( ${info.queryTimeResultSql} )
+      </if>
+      <if test="info.queryLocationResultSql != null and info.queryLocationResultSql != '' ">
+        AND di.LOCATION_RESULT  IN ( ${info.queryLocationResultSql} )
+      </if>
+      <if test="info.procInstSql != null and info.procInstSql != '' ">
+        and ${info.procInstSql}
+      </if>
+      order by di.WORK_DATE, du.EN_USERNO, di.USERCHECK_TIME
+    </select>
+
+</mapper>

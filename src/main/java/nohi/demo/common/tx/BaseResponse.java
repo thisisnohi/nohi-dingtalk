@@ -18,25 +18,31 @@ public class BaseResponse<T> implements Serializable {
         String SUC = "0"; // 成功
         String ERROR = "1"; // 失败
     }
+
     private String reqId;
     private String resCode;
     private String resMsg;
     private Date respDate;
     private T data;
+    private BasePage page;
 
     public BaseResponse() {
 
     }
+
     public BaseResponse(String resCode, String resMsg) {
         this.resCode = resCode;
         this.resMsg = resMsg;
     }
+
     public static BaseResponse error(String resMsg) {
         return new BaseResponse<String>(ResCode.ERROR, resMsg);
     }
+
     public static BaseResponse suc(String resMsg) {
         return new BaseResponse<String>(ResCode.SUC, resMsg);
     }
+
     public static BaseResponse newCode(String resCode, String resMsg) {
         if (StringUtils.isBlank(resCode)) {
             return new BaseResponse<String>(ResCode.SUC, resMsg);

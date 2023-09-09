@@ -1,5 +1,5 @@
 import nohi.demo.mp.utils.IdUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author NOHI

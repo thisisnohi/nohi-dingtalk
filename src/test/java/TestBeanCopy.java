@@ -1,7 +1,7 @@
 import com.dingtalk.api.response.OapiAttendanceListResponse;
 import nohi.demo.mp.dt.entity.jpa.DtKqInfo;
 import nohi.demo.mp.utils.JsonUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Date;
 

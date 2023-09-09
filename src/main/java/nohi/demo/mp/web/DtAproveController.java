@@ -3,9 +3,11 @@ package nohi.demo.mp.web;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
+import nohi.demo.common.tx.BaseRequest;
 import nohi.demo.common.tx.BaseResponse;
 import nohi.demo.mp.dt.entity.jpa.DtAprProcInst;
 import nohi.demo.mp.dt.service.DtAprProcInstService;
+import nohi.demo.mp.dto.mp.KqQueryReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,8 +46,10 @@ public class DtAproveController {
 
 
     @Operation(method = "syncProcInfo", summary = "同步流程实例数据")
-    @GetMapping("syncProcInfos")
-    public BaseResponse syncProcInfos(String procInstId) {
-        return dtAprProcInstService.syncProcInfo(procInstId);
+    @PostMapping("syncProcInfos")
+    public BaseResponse syncProcInfos(@RequestBody BaseRequest<KqQueryReq> info) {
+        // 同步
+        dtAprProcInstService .syncProcInstByData(info.getData());
+        return BaseResponse.suc("同步成功");
     }
 }

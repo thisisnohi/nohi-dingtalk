@@ -28,3 +28,4 @@
 hs_err_pid*
 
 /.fleet/settings.json
+/src/main/resources/rebel.xml

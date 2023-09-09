@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nohi.demo.mp.dt.dao.mapper.DtUserMapper">
+
+  <resultMap id="BaseResultMap" type="nohi.demo.mp.dt.entity.jpa.DtUser">
+    <id column="ID" jdbcType="VARCHAR" property="id" />    <!-- 主键 -->
+    <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />    <!-- 记录创建者 -->
+    <result column="CREATED_TS" jdbcType="TIMESTAMP" property="createdTs" />    <!-- 记录创建时间 -->
+    <result column="LAST_UPD_BY" jdbcType="VARCHAR" property="lastUpdBy" />    <!-- 记录最后更新者 -->
+    <result column="LAST_UPD_TS" jdbcType="TIMESTAMP" property="lastUpdTs" />    <!-- 记录最后更新时间 -->
+    <result column="DT_USERID" jdbcType="VARCHAR" property="dtUserid" />    <!-- 员工标识 -->
+    <result column="DT_USERNAME" jdbcType="VARCHAR" property="dtUsername" />    <!-- 名称 -->
+    <result column="DT_UNIONID" jdbcType="VARCHAR" property="dtUnionid" />    <!-- UNIONID -->
+    <result column="DT_ACTIVE" jdbcType="VARCHAR" property="dtActive" />    <!-- 是否激活： Y-是  N-否 -->
+    <result column="GET_PRI_IND" jdbcType="VARCHAR" property="getPriInd" />    <!-- 是否允许获取数据： Y-是  N-否 -->
+    <result column="EN_USERNO" jdbcType="VARCHAR" property="enUserno" />    <!-- 企业员工编号 -->
+  </resultMap>
+
+  <select id="userList" parameterType="nohi.demo.mp.dto.mp.user.UserQuery"  resultMap="BaseResultMap">
+    select
+        du.*
+    from dt_user du
+    where du.DT_USERID in (
+      select dr.DT_USERID from DT_USER_DEPT_REL dr
+      where 1=1
+      <if test="info.deptId != null and info.deptId != ''">
+        and dr.DT_DEPT_ID = #{info.deptId}
+      </if>
+    )
+    <if test="info.dtUserid != null and info.dtUserid != ''">
+      and du.DT_USERID = #{info.dtUserid}
+    </if>
+    <if test="info.dtUsername != null and info.dtUsername != ''">
+      and du.DT_USERNAME like CONCAT('%', #{info.dtUsername}, '%')
+    </if>
+  </select>
+
+</mapper>

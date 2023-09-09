@@ -11,3 +11,4 @@ info:
 spring:
   application:
     name: nohi-dingtalk  # 微服务名称，对外暴漏的微服务名称，十分重
+    workspace: ${HOME}/tmp/nohi-dingtalk

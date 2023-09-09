@@ -7,8 +7,8 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.taobao.api.ApiException;
 import lombok.extern.slf4j.Slf4j;
+import nohi.demo.common.config.Knife4jConfig;
 import nohi.demo.mp.config.MpConfig;
-import nohi.demo.mp.config.SpringContextUtils;
 import nohi.demo.mp.consts.DingTalkConsts;
 import nohi.demo.mp.dto.mp.token.TokenMeta;
 import nohi.demo.mp.utils.DateUtils;
@@ -32,7 +32,7 @@ public class MpServiceImpl {
 
     public MpServiceImpl(MpConfig mpConfig) {
         this.mpConfig = mpConfig;
-        this.client = SpringContextUtils.getBean(DingTalkClientService.class);
+        this.client = Knife4jConfig.SpringContextUtils.getBean(DingTalkClientService.class);
     }
 
     private boolean checkToken() {

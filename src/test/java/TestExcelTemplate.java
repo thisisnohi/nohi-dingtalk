@@ -1,10 +1,10 @@
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
-import nohi.demo.mp.dto.work.WorkDayMeta;
+import nohi.demo.mp.dto.work.dt.WorkDayMeta;
 import nohi.demo.mp.dto.work.WorkSheetDTO;
 import nohi.doc.utils.ExcelUtils;
 import org.apache.poi.ss.usermodel.*;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -27,24 +27,19 @@ public class TestExcelTemplate {
         List<WorkSheetDTO> list = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             WorkSheetDTO data = new WorkSheetDTO();
-            data.setProjectName("全链通");
             data.setUserNo("000" + i);
             data.setUserName("NAME" + i);
-            data.setWorkDayList(this.createWorkDayList(data.getUserNo(), data.getUserName(), data.getProjectName()));
+            data.setWorkDayList(this.createWorkDayList(data.getUserNo(), data.getUserName()));
             list.add(data);
         }
         return list;
     }
 
-    public List<WorkDayMeta> createWorkDayList(String userNo, String userName, String prjName) {
+    public List<WorkDayMeta> createWorkDayList(String userNo, String userName) {
         List<WorkDayMeta> list = Lists.newArrayList();
 
         for (int i = 0; i < 10; i++) {
             WorkDayMeta data = new WorkDayMeta();
-            data.setProjectName(prjName);
-            data.setUserNo(userNo);
-            data.setUserName(userName);
-            data.setWorkDays(new BigDecimal("1." + i));
             list.add(data);
         }
         return list;
@@ -83,14 +78,12 @@ public class TestExcelTemplate {
 
                 // 设置数据
                 setValue(row.getCell(0), "");
-                setValue(row.getCell(1), item.getProjectName());
-                setValue(row.getCell(2), item.getOffice());
                 setValue(row.getCell(3), item.getUserName());
 
                 // every day
                 List<WorkDayMeta> days = item.getWorkDayList();
                 for (int day_index = 0; day_index < days.size(); day_index++) {
-                    setValue(row.getCell(4 + day_index), days.get(day_index).getWorkDays());
+                    //setValue(row.getCell(4 + day_index), days.get(day_index).getWorkDays());
                 }
 
                 templateSheet.setForceFormulaRecalculation(true);

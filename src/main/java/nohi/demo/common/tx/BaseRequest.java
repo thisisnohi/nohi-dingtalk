@@ -1,5 +1,6 @@
 package nohi.demo.common.tx;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -12,6 +13,8 @@ import java.io.Serializable;
  **/
 @Data
 public class BaseRequest<T> implements Serializable {
-    private String reqId;
-    private T t;
+    private String traceId;
+    private String traceTime;
+    private T data;
+    private BasePage page;
 }

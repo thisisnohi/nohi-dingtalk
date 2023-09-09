@@ -1,26 +1,19 @@
 package nohi.demo.mp.dt.service;
 
 import com.dingtalk.api.response.OapiAttendanceGetleavestatusResponse;
-import com.dingtalk.api.response.OapiAttendanceListResponse;
-import com.dingtalk.api.response.OapiAttendanceVacationTypeListResponse;
 import com.google.common.collect.Lists;
-import com.taobao.api.ApiException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nohi.demo.common.das.JpaCRUDService;
 import nohi.demo.common.das.JpaDAO;
 import nohi.demo.common.tx.BaseResponse;
 import nohi.demo.mp.config.MpConfig;
-import nohi.demo.mp.config.SpringContextUtils;
 import nohi.demo.mp.dt.dao.jpa.DtVocationStatusDao;
 import nohi.demo.mp.dt.entity.jpa.DtUser;
 import nohi.demo.mp.dt.entity.jpa.DtUserDeptRel;
 import nohi.demo.mp.dt.entity.jpa.DtVocationStatus;
-import nohi.demo.mp.dt.entity.jpa.DtVocationType;
 import nohi.demo.mp.dto.mp.KqQueryReq;
-import nohi.demo.mp.dto.mp.kq.SynUserKqRes;
 import nohi.demo.mp.service.mp.MpHandler;
-import nohi.demo.mp.utils.JsonUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +22,6 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 

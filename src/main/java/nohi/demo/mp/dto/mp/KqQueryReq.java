@@ -1,5 +1,6 @@
 package nohi.demo.mp.dto.mp;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -20,10 +21,32 @@ public class KqQueryReq {
     private String deptId;
     @Schema(title = "用户ID列表", example = "[\"015919465020484799\"]")
     private List<String> userIdList;
-    @Schema(title = "日期开始时间 yyyy-MM-dd HH:mm:ss", description = "日期开始时间 yyyy-MM-dd HH:mm:ss", example = "2021-01-01 08:00:00")
-    @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss")
+    @Schema(title = "日期开始时间 yyyy-MM-dd", description = "日期开始时间 yyyy-MM-dd", example = "2021-01-01")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @JsonFormat( pattern="yyyy-MM-dd",timezone = "GMT+8")
     private Date workDateFrom;
-    @Schema(title = "日期结束时间 yyyy-MM-dd HH:mm:ss", description = "日期结束时间 yyyy-MM-dd HH:mm:ss", example = "2021-01-31 08:00:00")
-    @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss")
+    @Schema(title = "日期结束时间 yyyy-MM-dd", description = "日期结束时间 yyyy-MM-dd", example = "2021-01-31")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @JsonFormat( pattern="yyyy-MM-dd",timezone = "GMT+8")
     private Date workDateTo;
+
+
+    private String queryProjectId;
+    private String queryProjectName;
+    private String queryUserName;
+    private String queryUserId;
+    private String queryUserNo;
+    private String queryProcInstId;
+    private String workDateFromStr;
+    private String workDateToStr;
+    private String queryTimeResultSql;
+    private String queryLocationResultSql;
+    private String queryDeptSql;
+
+    private List<String> queryDeptIds;
+    private List<String> queryTimeResult;
+    private List<String> queryLocationResult;
+
+    // 查询待同步审批数据
+    private String procInstSql;
 }

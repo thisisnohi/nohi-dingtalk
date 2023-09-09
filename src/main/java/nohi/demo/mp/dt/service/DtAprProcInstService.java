@@ -4,12 +4,17 @@ import com.dingtalk.api.response.OapiProcessinstanceGetResponse;
 import com.taobao.api.ApiException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import nohi.demo.common.config.Knife4jConfig;
 import nohi.demo.common.das.JpaCRUDService;
 import nohi.demo.common.das.JpaDAO;
 import nohi.demo.common.tx.BaseResponse;
 import nohi.demo.mp.dt.dao.jpa.DtAprProcInstDao;
 import nohi.demo.mp.dt.entity.jpa.DtAprProcInst;
+import nohi.demo.mp.dt.service.kaoqing.DtKqInfoService;
+import nohi.demo.mp.dto.mp.KqQueryReq;
+import nohi.demo.mp.dto.mp.kq.UserKqInfoDTO;
 import nohi.demo.mp.service.mp.MpHandler;
+import nohi.demo.mp.utils.DateUtils;
 import nohi.demo.mp.utils.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -17,6 +22,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
@@ -35,6 +42,7 @@ public class DtAprProcInstService extends JpaCRUDService<DtAprProcInst, String> 
     private final DtAprTaskService dtAprTaskService;
     private final DtAprProcSubInstService dtAprProcSubInstService;
     private final DtAprFormInfoService dtAprFormInfoService;
+    private final DtKqInfoService dtKqInfoService;
 
     @Autowired
     private MpHandler mpHandler;
@@ -105,7 +113,50 @@ public class DtAprProcInstService extends JpaCRUDService<DtAprProcInst, String> 
         return inst;
     }
 
+    /**
+     * 同步考虑审批数据
+     *
+     * @param info     查询对象
+     * @return 响应数据
+     */
+    public void syncProcInstByData(KqQueryReq info) {
+        log.info("查询考勤信息");
 
+        // 转换请求参数
+        // 日期
+        if (null != info.getWorkDateFrom()) {
+            info.setWorkDateFromStr(DateUtils.format(info.getWorkDateFrom(), DateUtils.SIMPLE_DATE));
+        }
+        if (null != info.getWorkDateTo()) {
+            info.setWorkDateToStr(DateUtils.format(info.getWorkDateTo(), DateUtils.SIMPLE_DATE));
+        }
+        info.setProcInstSql(" di.PROC_INST_ID is not null and ( pi.RESULT != 'agree' or pi.RESULT is null )");
+        /** 查询流程数据 **/
+        List<UserKqInfoDTO> list = dtKqInfoService.dingTalkPageList(info);
+        log.info("执行同步审批数据[{}]", list.size());
+        CountDownLatch cd = new CountDownLatch(list.size());
+        // 循环列表，查询审批数据
+        list.parallelStream().forEach( item -> {
+            String subTitle = String.format("工作日[%s][%s]", item.getWorkDate(), item.getProcInstId());
+            try {
+                DtAprProcInstService service = Knife4jConfig.SpringContextUtils.getBean(DtAprProcInstService.class);
+                service.syncProcInfo(item.getProcInstId());
+            } catch (Exception e) {
+                log.error("{} 异常:{}", subTitle, e.getMessage());
+            } finally {
+                cd.countDown();
+            }
+        });
+
+        try {
+            boolean flag = cd.await(30, TimeUnit.SECONDS);
+            log.debug("flag:{}", flag);
+        } catch (Exception e) {
+            log.error("同步审批数据异常:{}", e.getMessage());
+        }
+
+        log.info("执行同步审批数据结束");
+    }
 
 
 }

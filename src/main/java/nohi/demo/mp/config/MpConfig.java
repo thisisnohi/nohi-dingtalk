@@ -23,4 +23,6 @@ public class MpConfig {
     private String managerId;
 
     private TokenMeta tokenMeta;
+    // 文件路径
+    private String filePath;
 }
