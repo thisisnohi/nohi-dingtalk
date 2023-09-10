@@ -36,7 +36,7 @@ export function synUserKq(data: object) {
 // 刷新部门
 export function syncDept(searchParam: object) {
   return requestTx({
-    url: '/dtDetp/sync',
+    url: '/dtDetp/refresh',
     method: 'post',
     data: searchParam
   })
@@ -45,7 +45,7 @@ export function syncDept(searchParam: object) {
 // 刷新考勤组
 export function syncKqGroup(searchParam: object) {
   return requestTx({
-    url: '/dtGroup/sync',
+    url: '/dtGroup/refresh',
     method: 'post',
     data: searchParam
   })
@@ -54,7 +54,7 @@ export function syncKqGroup(searchParam: object) {
 // 刷新考勤组
 export function syncUser(searchParam: object) {
   return requestTx({
-    url: '/dtUser/sync',
+    url: '/dtUser/refresh',
     method: 'post',
     data: searchParam
   })
