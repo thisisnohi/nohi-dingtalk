@@ -165,7 +165,7 @@ export default {
           .then((res) => {
             res.data.forEach( item => {
               this.deptOptions.push({
-                key: item.id,
+                key: item.dtDeptId,
                 val: item.dtDeptName,
               })
             })

@@ -142,8 +142,13 @@
         ON DI.RECORD_ID = KD.ID
       LEFT JOIN DT_APR_PROC_INST PI
         ON PI.ID = DI.PROC_INST_ID
-      where
-      1=1
+      where 1=1
+      <if test="info.queryDeptSql != null and info.queryDeptSql != '' ">
+        AND DI.DT_USERID in (
+            select DT_USERID from DT_USER_DEPT_REL
+            where DT_DEPT_ID in (${info.queryDeptSql})
+        )
+      </if>
       <if test="info.queryProcInstId != null and info.queryProcInstId != '' ">
         AND DI.PROC_INST_ID = #{info.queryProcInstId,jdbcType=VARCHAR}
       </if>

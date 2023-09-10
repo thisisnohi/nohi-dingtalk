@@ -52,7 +52,7 @@ public class DtUserController {
         return response;
     }
 
-    @GetMapping("refresh")
+    @PostMapping("refresh")
     public BaseResponse refresh() {
         try {
             return dtUserService.refresh("");

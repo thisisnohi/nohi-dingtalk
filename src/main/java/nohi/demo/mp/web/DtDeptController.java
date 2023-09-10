@@ -64,7 +64,7 @@ public class DtDeptController {
     }
 
     @Operation(method = "refresh", summary = "刷新部门")
-    @GetMapping("refresh")
+    @PostMapping("refresh")
     public BaseResponse refresh() {
         try {
             dtDeptService.refreshDepts("");

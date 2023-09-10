@@ -422,7 +422,10 @@ public class DtKqInfoService extends JpaCRUDService<DtKqInfo, String> {
             String tmp = Joiner.on("','").join(info.getQueryTimeResult());
             info.setQueryTimeResultSql("'" + tmp + "'");
         }
-
+        if (null != info.getQueryDeptIds() && !info.getQueryDeptIds().isEmpty()) {
+            String tmp = Joiner.on("','").join(info.getQueryDeptIds());
+            info.setQueryDeptSql("'" + tmp + "'");
+        }
         Page<UserKqInfoDTO> page = PageUtils.buildPage(basePage, UserKqInfoDTO.class);
         List<UserKqInfoDTO> list = dtKqInfoMapper.dingTalkList(page, info);
         PageUtils.buildPage(basePage, page);

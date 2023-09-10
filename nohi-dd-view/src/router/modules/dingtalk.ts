@@ -38,16 +38,16 @@ const route: Route[] = [
         name: 'DingTalkList',
         meta: {
           title: '考勤列表',
-          icon: 'sfont system-xingmingyonghumingnicheng'
+          icon: 'sfont system-yonghu'
         }
       },
       {
-        path: 'projectSheet',
-        component: createNameComponent(() => import('@/views/dingTalk/timesheet/projectSheet.vue')),
-        name: 'ProjectSheet',
+        path: 'empsWorkSheet',
+        component: createNameComponent(() => import('@/views/dingTalk/timesheet/empsWorkSheet.vue')),
+        name: 'EmpsWorkSheet',
         meta: {
           title: '考勤汇总',
-          icon: 'sfont system-xingmingyonghumingnicheng'
+          icon: 'sfont system-document'
         }
       },
       {
@@ -56,7 +56,7 @@ const route: Route[] = [
         name: 'DingTalkSync',
         meta: {
           title: '同步数据',
-          icon: 'sfont system-xingmingyonghumingnicheng'
+          icon: 'sfont system-shezhi'
         }
       }
     ]

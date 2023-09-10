@@ -37,7 +37,7 @@ public class DtKqGroupController {
     }
 
     @Operation(method = "refresh", summary = "刷新考勤组")
-    @GetMapping("refresh")
+    @PostMapping("refresh")
     public BaseResponse refresh() {
         try {
             return dtKqGroupService.refresh();
