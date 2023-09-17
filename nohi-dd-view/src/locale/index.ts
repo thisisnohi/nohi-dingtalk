@@ -19,6 +19,7 @@ const i18n = createI18n({
   __VUE_I18N_LEGACY_API__: false,
   __VUE_I18N_FULL_INSTALL__: false,
   locale: locale,
+  legacy: false,
   fallbackLocale: 'zh-cn',
   messages
 })

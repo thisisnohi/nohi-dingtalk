@@ -20,6 +20,16 @@ const route: Route[] = [
         meta: { title: 'message.menu.component.wordEditor' },
       },
       {
+        path: 'tinymce',
+        component: createNameComponent(() => import('@/views/main/components/wordEditor/tinymce-test.vue')),
+        meta: { title: 'Tinymce' },
+      },
+      {
+        path: 'quill',
+        component: createNameComponent(() => import('@/views/main/components/wordEditor/quill.vue')),
+        meta: { title: 'quill' },
+      },
+      {
         path: 'mdEditor',
         component: createNameComponent(() => import('@/views/main/components/mdEditor/index.vue')),
         meta: { title: 'message.menu.component.mdEditor' },

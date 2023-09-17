@@ -22,7 +22,6 @@
 import type { Ref } from 'vue'
 import { defineComponent, ref, watch } from 'vue'
 import drag from '@/directive/drag/index'
-import { UseDialogProps } from 'element-plus/lib/el-dialog/src/dialog'
 export interface LayerInterface {
   show: boolean;
   title: string;
@@ -30,7 +29,7 @@ export interface LayerInterface {
   width?: string;
   [propName: string]: any;
 }
-interface SystemDialogProps extends UseDialogProps {
+interface SystemDialogProps {
   handleClose: Function
 }
 export interface LayerType {
@@ -71,5 +70,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-  
+
 </style>

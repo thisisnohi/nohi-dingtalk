@@ -11,6 +11,7 @@
   "dependencies": {
     "@element-plus/icons": "^0.0.11",
     "@kangc/v-md-editor": "^2.3.5",
+    "@tinymce/tinymce-vue": "^5.1.1",
     "@vueuse/core": "^4.10.0",
     "axios": "^0.21.1",
     "codemirror": "^5.61.1",
@@ -24,6 +25,7 @@
     "sortablejs": "^1.13.0",
     "splitpanes": "^3.0.4",
     "throttle-debounce": "^3.0.1",
+    "tinymce": "^6.7.0",
     "v-contextmenu": "^3.0.0",
     "vue": "^3.1.2",
     "vue-i18n": "^9.1.6",
