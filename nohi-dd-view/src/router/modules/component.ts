@@ -20,7 +20,7 @@ const route: Route[] = [
         meta: { title: 'message.menu.component.wordEditor' },
       },
       {
-        path: 'tinymce',
+        path: 'tinymceTest',
         component: createNameComponent(() => import('@/views/main/components/wordEditor/tinymce-test.vue')),
         meta: { title: 'Tinymce' },
       },

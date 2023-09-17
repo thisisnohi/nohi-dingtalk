@@ -14,6 +14,7 @@ import i18n from './locale'
 import moment from 'moment'
 import { initDict } from "./api/dicts";
 import { initIcon } from "./init";
+import print from 'vue3-print-nb';
 
 // 试卷、试题
 import { shijuan } from "../mock/exam/shijuan";
@@ -27,10 +28,11 @@ if (import.meta.env.MODE !== "development") {
 /** 权限路由处理主方法 */
 getAuthRoutes().then(() => {
   const app = createApp(App)
-  app.use(ElementPlus, { size: store.state.app.elementSize })
+  app.use(ElementPlus, {size: store.state.app.elementSize})
   app.use(store)
   app.use(router)
   app.use(i18n)
+  app.use(print);
   // app.config.performance = true
   app.mount('#app')
 

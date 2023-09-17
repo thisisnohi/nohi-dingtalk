@@ -53,18 +53,21 @@ const props = defineProps({
 
   plugins: {
     type: [String, Array],
-    default: 'lists image media table wordcount save preview'
+    // default: 'lists image media table wordcount save preview'
     // 插件需要import进来
     // default: 'wordcount visualchars visualblocks toc textpattern template tabfocus spellchecker searchreplace save quickbars print preview paste pagebreak noneditable nonbreaking media insertdatetime importcss imagetools image hr help fullscreen fullpage directionality codesample code charmap link code table lists advlist anchor autolink autoresize autosave'
     // default: 'searchreplace fontsizeselect bold italic underline strikethrough alignleft aligncenter alignright outdent indent blockquote undo redo removeformat subscript superscript code codesampl'
+    default : 'image table advlist fullscreen link lists preview searchreplace insertdatetime charmap'
   },
   toolbar: {
     type: [String, Array],
     default:
-        'advlist anchor undo redo |  formatselect | bold italic underline strikethrough forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent blockquote | lists image media table | codesample code removeformat save preview'
+        // ' anchor undo redo |  formatselect | bold italic underline strikethrough forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent blockquote | lists image media table | codesample code removeformat save preview'
     // default:
     //   "formats undo redo paste print fontsizeselect fontselect template fullpage|wordcount ltr rtl visualchars visualblocks toc spellchecker searchreplace|save preview pagebreak nonbreaking|media image|outdent indent aligncenter alignleft alignright alignjustify lineheight  underline quicklink h2 h3 blockquote numlist bullist table removeformat forecolor backcolor bold italic  strikethrough hr charmap link insertdatetime|subscript superscript cut codesample code |anchor preview fullscreen|help",
     // 'bold italic underline h1 h2 blockquote codesample numlist bullist link image | removeformat fullscreen'
+    'fontselect | formatselect | fontsizeselect | forecolor backcolor | bold italic underline strikethrough | image | table | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | preview  hr | undo redo | fullscreen searchreplace |print | customUploadBtn'
+    // 'fontselect | formatselect | fontsizeselect | forecolor backcolor | bold italic underline strikethrough | image | table | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | preview  hr | undo redo | fullscreen searchreplace |print | customUploadBtn'
   }
 })
 
@@ -79,10 +82,10 @@ const init = {
   content_css: './tinymce/skins/content/default/content.css', //内容区域css样式
   // images_file_types: "jpg,svg,webp",
   // images_upload_url: "xxxxxxxxxxxxx",//系统默认配置的自动上传路径，需替换为真实路径测试
-  // plugins: props.plugins,
-  // toolbar: props.toolbar,
-  plugins: "image,table,advlist,fullscreen,link,lists,preview,searchreplace,insertdatetime,charmap",//image imagetools
-  toolbar: ['fontselect | formatselect | fontsizeselect | forecolor backcolor | bold italic underline strikethrough | image | table | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | preview  hr | undo redo | fullscreen searchreplace |print | customUploadBtn'],
+  plugins: props.plugins,
+  toolbar: props.toolbar,
+  // plugins: "image,table,advlist,fullscreen,link,lists,preview,searchreplace,insertdatetime,charmap",//image imagetools
+  // toolbar: ['fontselect | formatselect | fontsizeselect | forecolor backcolor | bold italic underline strikethrough | image | table | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | preview  hr | undo redo | fullscreen searchreplace |print | customUploadBtn'],
   branding: false,
   // 隐藏菜单栏
   //menubar: false,
@@ -213,6 +216,7 @@ const clear = () => {
 }
 
 const setContent = (value) => {
+  console.info('setContent:' + value)
   textContent.value = value
 }
 const getContent = () => {
