@@ -1,8 +1,16 @@
+// @ts-ignore
 import locale from 'element-plus/dist/locale/zh-cn.mjs'
 const lang = {
   el: locale.el, // element内部国际化
   message: {
     language: '中文',
+    exam: {
+      menu: {
+        name: '考试中心',
+        index: '考试主页',
+        start: '考试开始',
+      }
+    },
     common: {
       search: '搜索',
       searchTip: '请输入关键词进行检索',
@@ -47,7 +55,7 @@ const lang = {
         card: '卡片列表',
         work: '工作进度',
         baidu: '外部链接',
-      },   
+      },
       menu: {
         name: '多级嵌套菜单',
         menu_1: '二级菜单1',

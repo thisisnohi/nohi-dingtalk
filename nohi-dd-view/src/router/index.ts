@@ -4,7 +4,7 @@
  * @LastEditors: luoxi
  * @LastEditTime: 2022-01-25 12:25:51
  * @FilePath: \vue-admin-box\src\router\index.ts
- * @Description: 
+ * @Description:
  */
 /**
  * @description 所有人可使用的参数配置列表
@@ -23,7 +23,7 @@ NProgress.configure({ showSpinner: false })
 // 引入不需要权限的modules
 import System from './modules/system'
 
-/** 
+/**
  * @name 初始化必须要的路由
  * @description 使用reactive属性使得modules可以在路由菜单里面实时响应，搞定菜单回显的问题
  * @detail 针对modules的任何修改，均会同步至菜单级别，记住，是针对变量名为：moduels的修改
@@ -64,6 +64,7 @@ router.beforeEach((to, _from, next) => {
 // 路由跳转后的监听操作
 router.afterEach((to, _from) => {
   const keepAliveComponentsName = store.getters['keepAlive/keepAliveComponentsName'] || []
+  // @ts-ignore
   const name = to.matched[to.matched.length - 1].components.default.name
   if (to.meta && to.meta.cache && name && !keepAliveComponentsName.includes(name)) {
     store.commit('keepAlive/addKeepAliveComponentsName', name)

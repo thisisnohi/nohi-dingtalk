@@ -1,7 +1,8 @@
 import type { Route } from '../index.type'
-import ExamLayout from '@/views/exam/ExamLayout.vue'
-import MenuBox from '@/components/menu/index.vue'
+// import ExamLayout from '@/views/exam/ExamLayout.vue'
+import ExamLayout from '@/layout/index.vue'
 import { createNameComponent } from '../createNode'
+
 const route: Route[] = [
   {
     path: '/exam',

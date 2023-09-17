@@ -1,3 +1,4 @@
+// @ts-ignore
 import locale from 'element-plus/dist/locale/en.mjs'
 
 const lang = {
