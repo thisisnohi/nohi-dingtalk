@@ -1,5 +1,8 @@
 <script setup>
 import { ref, onMounted } from 'vue'
+import "mammoth/mammoth.browser.js";
+import mammoth from "mammoth";
+
 import tinymce from 'tinymce/tinymce' //tinymce默认hidden，不引入不显示
 import Editor from '@tinymce/tinymce-vue'
 import 'tinymce/themes/silver/theme' // 主题文件
@@ -76,8 +79,10 @@ const init = {
   content_css: './tinymce/skins/content/default/content.css', //内容区域css样式
   // images_file_types: "jpg,svg,webp",
   // images_upload_url: "xxxxxxxxxxxxx",//系统默认配置的自动上传路径，需替换为真实路径测试
-  plugins: props.plugins,
-  toolbar: props.toolbar,
+  // plugins: props.plugins,
+  // toolbar: props.toolbar,
+  plugins: "image,table,advlist,fullscreen,link,lists,preview,searchreplace,insertdatetime,charmap",//image imagetools
+  toolbar: ['fontselect | formatselect | fontsizeselect | forecolor backcolor | bold italic underline strikethrough | image | table | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | preview  hr | undo redo | fullscreen searchreplace |print | customUploadBtn'],
   branding: false,
   // 隐藏菜单栏
   //menubar: false,
@@ -88,17 +93,97 @@ const init = {
   init_instance_callback: (editor) => {
     console.log('初始化完成：', editor)
   },
-  // setup: (edit) => {
-  //   let _this = this
-  //   editor.ui.registry.addButton("importbtn", {
-  //     text: "导入word",
-  //     // icon:'', // 目前使用文字按钮，如果需要图标展示，根据文档中自定义图标中的内容进行配置
-  //     onAction: function () {
-  //       //触发上传组件
-  //       _this.$refs['fileRefs'].$refs['upload-inner'].handleClick()
-  //     },
-  //   });
-  // }
+  file_picker_callback: function(callback, value, meta) {
+    // 打开选择文件的弹窗
+    var input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+
+    input.onchange = function () {
+      var file = input.files[0];
+      // 将文件转换成base64编码
+      var reader = new FileReader();
+      reader.onloadend = function () {
+        var base64 = reader.result;
+        // 将base64编码插入到编辑器的当前光标位置
+        callback(base64, {
+          alt: ''
+        });
+      };
+      reader.readAsDataURL(file);
+    };
+    input.click();
+  },
+  setup: function (editor) {
+    // 注册自定义按钮
+    editor.ui.registry.addButton('customUploadBtn', {
+      text: '上传Word',
+      onAction: function () {
+        var input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.doc,.docx';
+        // 执行上传文件操作
+        input.addEventListener("change", handleFileSelect, false);
+
+        //获取上传文件base64数据
+        function arrayBufferToBase64(arrayBuffer) {
+          var binary = '';
+          var bytes = new Uint8Array(arrayBuffer);
+          var len = bytes.byteLength;
+          for (var i = 0; i < len; i++) {
+            binary += String.fromCharCode(bytes[i]);
+          }
+          return window.btoa(binary);
+        }
+
+        function handleFileSelect(event) {
+          var file = event.target.files[0];
+          //获取上传文件后缀，如果是docx格式，则使用mammoth来进行解析，
+          //如果不是则访问后台，将文件传输流base64传递到后台
+          //生成文件，然后用java解析doc，并返回到前台
+          var extension = file.name.slice((file.name.lastIndexOf(".") - 1 >>> 0) + 2);
+          if (extension === 'docx') {
+            readFileInputEventAsArrayBuffer(event, function (arrayBuffer) {
+              var base64Data = arrayBufferToBase64(arrayBuffer);
+              console.log(base64Data);
+              mammoth.convertToHtml({ arrayBuffer: arrayBuffer })
+                  .then(displayResult, function (error) {
+                    console.error(error);
+                  });
+            });
+          } else if(extension === 'doc') {
+            readFileInputEventAsArrayBuffer(event, function (arrayBuffer) {
+              //base64文件流
+              var base64Data = arrayBufferToBase64(arrayBuffer);
+              var result ="后台请求";
+              alert(result);
+              console.log(base64Data);
+            });
+            //tinymce的set方法将内容添加到编辑器中
+            tinymce.activeEditor.setContent(result);
+          }
+        }
+
+        function displayResult(result) {
+          //tinymce的set方法将内容添加到编辑器中
+          tinymce.activeEditor.setContent(result.value);
+        }
+
+        function readFileInputEventAsArrayBuffer(event, callback) {
+          var file = event.target.files[0];
+          var reader = new FileReader();
+          reader.onload = function (loadEvent) {
+            var arrayBuffer = loadEvent.target.result;
+            callback(arrayBuffer);
+          };
+          reader.readAsArrayBuffer(file);
+        }
+
+        // 触发点击事件，打开选择文件的对话框
+        input.click();
+      }
+    });
+  }
   // 此处为自定义图片上传处理函数
   // images_upload_handler: (blobInfo, progress) => {
   //   console.log("图片上传处理：", blobInfo.blob());
