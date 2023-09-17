@@ -12,7 +12,7 @@
  * @params alwayShow: 只有一个子路由时是否总是展示菜单，默认false
  */
 import { reactive } from 'vue'
-import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import store from '@/store'
 import i18n from '@/locale'
 import NProgress from '@/utils/system/nprogress'
@@ -22,7 +22,6 @@ NProgress.configure({ showSpinner: false })
 
 // 引入不需要权限的modules
 import System from './modules/system'
-import Exam from './modules/exam'
 
 /** 
  * @name 初始化必须要的路由
@@ -30,8 +29,7 @@ import Exam from './modules/exam'
  * @detail 针对modules的任何修改，均会同步至菜单级别，记住，是针对变量名为：moduels的修改
  **/
 let modules = reactive([
-  ...System,
-  ...Exam,
+  ...System
 ])
 
 const { t } = i18n.global
@@ -55,10 +53,6 @@ router.beforeEach((to, _from, next) => {
     }
     next()
   } else if (whiteList.includes(to.path)) {
-    to.meta.title ? (changeTitle(to.meta.title)) : "" // 动态title
-    next()
-  } else if (to.path.indexOf('/exam') === 0) {
-    console.info('/exam')
     to.meta.title ? (changeTitle(to.meta.title)) : "" // 动态title
     next()
   } else {

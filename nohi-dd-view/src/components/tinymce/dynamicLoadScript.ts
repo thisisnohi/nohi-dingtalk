@@ -1,11 +1,13 @@
-let callbacks = []
+let callbacks: any = []
 
 function loadedTinymce() {
   // to fixed https://github.com/PanJiaChen/vue-element-admin/issues/2144
   // check is successfully downloaded script
+  // @ts-ignore
   return window.tinymce
 }
 
+// @ts-ignore
 const dynamicLoadScript = (src, callback) => {
   const existingScript = document.getElementById(src)
   const cb = callback || function() {}
@@ -28,6 +30,7 @@ const dynamicLoadScript = (src, callback) => {
     }
   }
 
+  // @ts-ignore
   function stdOnEnd(script) {
     script.onload = function() {
       // this.onload = null here is necessary
@@ -44,6 +47,7 @@ const dynamicLoadScript = (src, callback) => {
     }
   }
 
+  // @ts-ignore
   function ieOnEnd(script) {
     script.onreadystatechange = function() {
       if (this.readyState !== 'complete' && this.readyState !== 'loaded') return

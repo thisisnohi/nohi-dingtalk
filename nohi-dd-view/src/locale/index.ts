@@ -11,7 +11,7 @@ Object.keys(files).forEach((c: string) => {
   messages[moduleName] = module
 })
 
-const lang = store.state.app.lang || navigator.userLanguage || navigator.language // 初次进入，采用浏览器当前设置的语言，默认采用中文
+const lang = store.state.app.lang || navigator.language // 初次进入，采用浏览器当前设置的语言，默认采用中文
 const locale = lang.indexOf('en') !== -1 ? 'en' : 'zh-cn'
 
 /** 国际化主函数，调用vue-i18n插件生成 */
@@ -19,7 +19,6 @@ const i18n = createI18n({
   __VUE_I18N_LEGACY_API__: false,
   __VUE_I18N_FULL_INSTALL__: false,
   locale: locale,
-  legacy: false,
   fallbackLocale: 'zh-cn',
   messages
 })

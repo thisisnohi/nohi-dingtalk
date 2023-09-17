@@ -46,7 +46,7 @@ export default defineComponent({
   name: 'card',
   setup() {
     let loading = ref(true)
-    let list = ref([])
+    let list: Ref<{ id: string, image: string, title: string, time: string }[]> = ref([])
     let box: Ref<HTMLDivElement> = ref() as any
     let page: Page = reactive({
       index: 1,
@@ -74,12 +74,12 @@ export default defineComponent({
       })
     }
     // 分页相关：监听页码切换事件
-    const handleCurrentChange = (val: Number) => {
+    const handleCurrentChange = (val: number) => {
       page.index = val
       getListData(false)
     }
     // 分页相关：监听单页显示数量切换事件
-    const handleSizeChange = (val: Number) => {
+    const handleSizeChange = (val: number) => {
       page.size = val
       page.index = 1
       getListData(false)

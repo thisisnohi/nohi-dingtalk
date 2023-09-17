@@ -6,7 +6,7 @@ export type Route = {
     /** @name 访问路径 */
     path: string
     /** @name 需要使用的组件 @description 两种类型，第一种是默认的Vue文件类型，第二种是通过createNameComponent搞出来的，凡是一个组件需要keep-alive,必须使用createNameComponent来搞定 */
-    component: DefineComponent<{}, {}, any> | Promise<DefineComponent<{}, {}, any>>
+    component: DefineComponent<{}, {}, any> | (() => Promise<DefineComponent<{}, {}, any>>)
     /** @name 基础元数据 */
     meta: Meta
 
@@ -30,6 +30,10 @@ export interface Meta {
     icon?: string
     /** @name 是否需要缓存页面，目前仅支持二级菜单缓存，多级菜单缓存会在未来支持，可选 @default false */
     cache?: boolean
+    /** @name 是否隐藏标签页，可选 @default false */
+    hideTabs?: boolean
+    /** @name 左侧菜单强制聚焦时的路由，比如新增、编辑一类页面，可能需要使用 */
+    activeMenu?: string
     /** @name 任意值 @description 供自行扩展使用，但推荐在上面自己定义好 */
     [key: string]: any
 }

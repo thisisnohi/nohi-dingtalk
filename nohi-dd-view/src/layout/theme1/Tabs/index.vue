@@ -1,6 +1,11 @@
 <template>
   <div class="tabs">
-    <el-scrollbar class="scroll-container tags-view-container" ref="scrollbarDom" @wheel.native.prevent="handleScroll">
+    <el-scrollbar
+      class="scroll-container tags-view-container"
+      ref="scrollbarDom"
+      @wheel.passive="handleWhellScroll"
+      @scroll="handleScroll"
+    >
       <Item
         v-for="menu in menuList"
         :key="menu.meta.title"
@@ -11,6 +16,10 @@
       />
     </el-scrollbar>
     <div class="handle">
+      <div id="vueAdminBoxTabRefresh" @click="pageReload"></div>
+      <div id="vueAdminBoxTabCloseSelf" @click="closeCurrentRoute"></div>
+      <div id="vueAdminBoxTabCloseOther" @click="closeOtherRoute"></div>
+      <div id="vueAdminBoxTabCloseAll" @click="closeAllRoute"></div>
       <el-dropdown placement="bottom">
         <div class="el-dropdown-link">
           <el-icon><ArrowDown /></el-icon>
@@ -56,17 +65,13 @@ export default defineComponent({
     const route = useRoute()
     const router = useRouter()
     const scrollbarDom: Ref<typeof ElScrollbar|null> = ref(null)
-    const allRoutes = router.options.routes
+    const scrollLeft = ref(0)
     const defaultMenu = {
       path: '/dashboard',
       meta: { title: 'message.menu.dashboard.index', hideClose: true }
     }
     const contentFullScreen = computed(() => store.state.app.contentFullScreen)
     const currentDisabled = computed(() => route.path === defaultMenu.path)
-    const scrollWrapper = computed(() => {
-      if (scrollbarDom.value)
-        return scrollbarDom.value.$refs.wrap
-    })
 
     let activeMenu: any = reactive({ path: '' })
     let menuList = ref(tabsHook.getItem())
@@ -98,7 +103,9 @@ export default defineComponent({
     // 关闭当前标签，首页不关闭
     function closeCurrentRoute() {
       if (route.path !== defaultMenu.path) {
-        delMenu(route)
+        const tab = document.getElementById('vueAdminBoxTabCloseSelf')
+        const nextPath = tab?.getAttribute('nextPath')
+        delMenu(route, nextPath)
       }
     }
     // 关闭除了当前标签之外的所有标签
@@ -119,7 +126,7 @@ export default defineComponent({
 
     // 添加新的菜单项
     function addMenu(menu: any) {
-      let { path, meta, name } = menu
+      let { path, meta, name, query } = menu
       if (meta.hideTabs) {
         return
       }
@@ -130,13 +137,14 @@ export default defineComponent({
         menuList.value.push({
           path,
           meta,
-          name
+          name,
+          query
         })
       }
     }
 
     // 删除菜单项
-    function delMenu(menu: any) {
+    function delMenu(menu: any, nextPath?: string) {
       let index = 0
       if (!menu.meta.hideClose) {
         if (menu.meta.cache && menu.name) {
@@ -145,8 +153,14 @@ export default defineComponent({
         index = menuList.value.findIndex((item: any) => item.path === menu.path)
         menuList.value.splice(index, 1)
       }
+      if (nextPath) {
+        router.push(nextPath)
+        return
+      }
+      // 若删除的是当前页面，回到前一页，若为最后一页，则回到默认的首页
       if (menu.path === activeMenu.path) {
-        index - 1 > 0 ? router.push(menuList.value[index - 1].path) : router.push(defaultMenu.path)
+        const prePage = index - 1 > 0 ? menuList.value[index - 1] : { path: defaultMenu.path }
+        router.push({ path: prePage.path, query: prePage.query || {} })
       }
     }
 
@@ -161,14 +175,18 @@ export default defineComponent({
     function setPosition() {
       if (scrollbarDom.value) {
         const domBox = {
-          scrollbar: scrollbarDom.value.scrollbar$.querySelector('.el-scrollbar__wrap ') as HTMLDivElement,
-          activeDom: scrollbarDom.value.scrollbar$.querySelector('.active') as HTMLDivElement,
-          activeFather: scrollbarDom.value.scrollbar$.querySelector('.el-scrollbar__view') as HTMLDivElement
+          scrollbar: scrollbarDom.value.wrapRef as HTMLDivElement,
+          activeDom: scrollbarDom.value.wrapRef.querySelector('.active') as HTMLDivElement,
+          activeFather: scrollbarDom.value.wrapRef.querySelector('.el-scrollbar__view') as HTMLDivElement
         }
-        for (let i in domBox) {
-          if (!domBox[i]) {
-            return
+        let hasDoms = true
+        Object.keys(domBox).forEach((dom) => {
+          if (!dom) {
+            hasDoms = false
           }
+        })
+        if (!hasDoms) {
+          return
         }
         const domData = {
           scrollbar: domBox.scrollbar.getBoundingClientRect(),
@@ -189,10 +207,22 @@ export default defineComponent({
       store.commit('keepAlive/setKeepAliveComponentsName', keepAliveNames)
     }
 
-    function handleScroll(e: WheelEvent & { wheelDelta: number }) {
-      const eventDelta = e.wheelDelta || -e.deltaY * 40
-      const $scrollWrapper = scrollWrapper.value
-      $scrollWrapper.scrollLeft = $scrollWrapper.scrollLeft + eventDelta / 4
+    /** 监听鼠标滚动事件 */
+    function handleWhellScroll(e: any) {
+      let distance = 0
+      let speed = 5
+      if (e.wheelDelta > 30) {
+        distance = -10
+      } else if (e.wheelDelta < -30) {
+        distance = 10
+      }
+      // console.log(scrollLeft.value + eventDelta / 4)
+      scrollbarDom.value?.setScrollLeft(scrollLeft.value + distance * speed)
+    }
+
+    /** 监听滚动事件 */
+    function handleScroll({ scrollLeft: left }: { scrollLeft: number }) {
+      scrollLeft.value = left
     }
 
     // 初始化时调用：1. 新增菜单 2. 初始化activeMenu
@@ -201,18 +231,19 @@ export default defineComponent({
     return {
       RefreshLeft, CircleClose,
       contentFullScreen,
-      onFullscreen,
-      pageReload,
       scrollbarDom,
       // 菜单相关
       menuList,
       activeMenu,
+      currentDisabled,
+      onFullscreen,
+      pageReload,
       delMenu,
       closeCurrentRoute,
       closeOtherRoute,
       closeAllRoute,
-      currentDisabled,
-      handleScroll
+      handleScroll,
+      handleWhellScroll
     }
   }
 })

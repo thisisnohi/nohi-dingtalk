@@ -1,7 +1,6 @@
 <template>
-  <div v-drag>
+  <div v-drag="layer.show">
     <el-dialog
-      ref="dialog"
       v-model="layer.show"
       :title="layer.title"
       :width="layer.width"
@@ -19,8 +18,7 @@
 </template>
 
 <script lang="ts">
-import type { Ref } from 'vue'
-import { defineComponent, ref, watch } from 'vue'
+import { defineComponent } from 'vue'
 import drag from '@/directive/drag/index'
 export interface LayerInterface {
   show: boolean;
@@ -28,9 +26,6 @@ export interface LayerInterface {
   showButton?: boolean;
   width?: string;
   [propName: string]: any;
-}
-interface SystemDialogProps {
-  handleClose: Function
 }
 export interface LayerType {
   close: Function
@@ -53,15 +48,13 @@ export default defineComponent({
     drag
   },
   setup(props, ctx) {
-    const dialog: Ref<SystemDialogProps> = ref(null) as any
     function confirm() {
       ctx.emit('confirm')
     }
     function close() {
-      dialog.value.handleClose()
+      props.layer.show = false
     }
     return {
-      dialog,
       confirm,
       close
     }
@@ -70,5 +63,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-
+  
 </style>
