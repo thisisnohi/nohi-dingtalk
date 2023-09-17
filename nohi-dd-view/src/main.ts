@@ -14,6 +14,7 @@ import i18n from './locale'
 import moment from 'moment'
 import { initDict } from "./api/dicts";
 import { initIcon } from "./init";
+// @ts-ignore
 import print from 'vue3-print-nb';
 
 // 试卷、试题
@@ -28,6 +29,7 @@ if (import.meta.env.MODE !== "development") {
 /** 权限路由处理主方法 */
 getAuthRoutes().then(() => {
   const app = createApp(App)
+  // @ts-ignore
   app.use(ElementPlus, {size: store.state.app.elementSize})
   app.use(store)
   app.use(router)
