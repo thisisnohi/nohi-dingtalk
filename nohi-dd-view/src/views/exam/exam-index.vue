@@ -2,6 +2,10 @@
   <div class="layout-container">
     <el-row justify="center">
       <img alt="Vue logo" src="@/assets/logo.png" />
+      <img alt="Vue logo" src="/assets/logo.png" />
+      <img alt="Vue logo" src="./assets/logo.png" />
+      <img alt="Vue logo" src="https://alyecs223.xnzn.net/zhst-h5tp-in/lnyst/225116216526639104/cust/c6261432025148659433d8762cbc8792.jpg" />
+	  
     </el-row>
     <h1>Welcome to Your App</h1>
     <el-row justify="center">

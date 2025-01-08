@@ -21,8 +21,14 @@ const route: Route[] = [
         component: createNameComponent(() => import('@/views/exam/exam-start.vue')),
         meta: { title: 'message.exam.menu.start' }
       },
+      {
+        path: 'exam-test',
+        component: createNameComponent(() => import('@/views/exam/exam-test.vue')),
+        meta: { title: 'message.exam.menu.start' }
+      },
     ]
   }
 ]
 
+// @ts-ignore
 export default route
